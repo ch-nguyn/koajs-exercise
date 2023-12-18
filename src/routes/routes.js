@@ -2,7 +2,7 @@ import Router from "koa-router";
 import {
   getAllProducts,
   getSingleProduct,
-  deleteProduct,
+  removeProduct,
   createProduct,
   updateProduct,
 } from "../handlers/products/productHandlers.js";
@@ -36,7 +36,7 @@ router.get("/page/edit/:id", async (ctx) => {
 router.get("/api/products", getAllProducts);
 router.post("/api/product", checkCreateInput, createProduct);
 router.get("/api/product/:id", getSingleProduct);
-router.delete("/api/product/:id", deleteProduct);
+router.delete("/api/product/:id", removeProduct);
 router.put("/api/product/:id", checkUpdateInput, updateProduct);
 
 export default router;

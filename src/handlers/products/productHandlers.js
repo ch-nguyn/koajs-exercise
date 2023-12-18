@@ -1,7 +1,7 @@
 import {
   getData,
   getOne,
-  deleteOne,
+  removeOne,
   addOne,
   updateOne,
 } from "../../database/productRepository.js";
@@ -47,7 +47,7 @@ export const getSingleProduct = async (ctx) => {
   }
 };
 
-export const deleteProduct = async (ctx) => {
+export const removeProduct = async (ctx) => {
   try {
     const { id } = ctx.params;
     const product = getOne(id);
@@ -56,7 +56,7 @@ export const deleteProduct = async (ctx) => {
       throw new Error("There's no product with that ID");
     }
 
-    deleteOne(product);
+    removeOne(product);
 
     ctx.status = 204;
     return (ctx.body = {

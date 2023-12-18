@@ -8,23 +8,15 @@ import products from "./products.json" assert { type: "json" };
  * @param {limit, orderBy} query
  * @return {Object}
  */
-export const getData = (query) => {
-  const { limit, orderBy } = query;
-  let data = [...products];
-  if (orderBy) {
-    sortData(data, "createdAt", orderBy);
-  }
-  if (limit) {
-    data = data.slice(0, limit);
-  }
-
+export const getData = ({ limit = 10, orderBy = "asc" } = {}) => {
+  const data = sortData([...products], "createdAt", orderBy).slice(0, limit);
   return data;
 };
 
 /**
  *
  * @param {number} id
- * @param {*} fields
+ * @param {string} fields
  * @return {Object}
  */
 export const getOne = (id, fields) => {
@@ -37,22 +29,20 @@ export const getOne = (id, fields) => {
   return data;
 };
 
-export const deleteOne = (product) => {
-  let data = products.filter((el) => el.id !== product.id);
+export const removeOne = (product) => {
+  const data = products.filter((el) => el.id !== product.id);
   saveData(data);
 };
 
 export const addOne = (product) => {
-  let data = [...products, product];
+  const data = [...products, product];
   saveData(data);
 };
 
 export const updateOne = (product, body) => {
-  let data = [...products];
-
   const updatedProduct = { ...product, ...body };
 
-  const updatedData = data.map((singleProduct) =>
+  const updatedData = products.map((singleProduct) =>
     singleProduct.id === product.id ? updatedProduct : singleProduct
   );
   saveData(updatedData);
