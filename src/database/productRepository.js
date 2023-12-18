@@ -9,7 +9,6 @@ import products from "./products.json" assert { type: "json" };
  * @return {Object}
  */
 export const getData = ({ limit = 10, orderBy = "asc" } = {}) => {
-  let a;
   const data = sortData([...products], "createdAt", orderBy).slice(0, limit);
   return data;
 };
