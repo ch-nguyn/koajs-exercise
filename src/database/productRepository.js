@@ -1,7 +1,7 @@
 import pick from "../helpers/pick.js";
 import { saveData } from "../helpers/saveData.js";
 import sortData from "../helpers/sortData.js";
-import products from "./productsData.json" assert { type: "json" };
+import products from "./products.json" assert { type: "json" };
 
 /**
  *
