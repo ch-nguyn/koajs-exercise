@@ -4,7 +4,7 @@ import { saveData } from "../helpers/saveData.js";
 
 const generateProducts = () => {
   let products = [];
-  for (let i = 1; i <= 1000; i++) {
+  for (let i = 1; i <= 10; i++) {
     let singleProduct = {
       id: i,
       name: faker.commerce.productName(),

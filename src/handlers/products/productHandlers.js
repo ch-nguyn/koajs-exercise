@@ -1,5 +1,5 @@
 import {
-  getAll,
+  getData,
   getOne,
   deleteOne,
   addOne,
@@ -8,7 +8,7 @@ import {
 
 export const getAllProducts = async (ctx) => {
   try {
-    const products = getAll(ctx.query);
+    const products = getData(ctx.query);
     ctx.status = 200;
     return (ctx.body = {
       success: true,
@@ -27,6 +27,11 @@ export const getAllProducts = async (ctx) => {
 export const getSingleProduct = async (ctx) => {
   try {
     const product = getOne(ctx.params.id, ctx.query.fields);
+    console.log(2);
+    if (!product) {
+      throw new Error("There's no product with that ID");
+    }
+
     ctx.status = 200;
     return (ctx.body = {
       success: true,
@@ -34,7 +39,7 @@ export const getSingleProduct = async (ctx) => {
     });
   } catch (e) {
     console.error(e);
-    ctx.status = 404;
+
     return (ctx.body = {
       success: false,
       error: e.message,
@@ -44,7 +49,14 @@ export const getSingleProduct = async (ctx) => {
 
 export const deleteProduct = async (ctx) => {
   try {
-    deleteOne(ctx.params.id);
+    const { id } = ctx.params;
+    const product = getOne(id);
+
+    if (!product) {
+      throw new Error("There's no product with that ID");
+    }
+
+    deleteOne(product);
 
     ctx.status = 204;
     return (ctx.body = {
@@ -64,7 +76,12 @@ export const deleteProduct = async (ctx) => {
 export const createProduct = async (ctx) => {
   try {
     const product = ctx.request.body;
+    if (getOne(product.id)) {
+      throw new Error("Product has already existed");
+    }
+
     addOne(product);
+
     ctx.status = 201;
     return (ctx.body = {
       success: true,
@@ -85,7 +102,12 @@ export const updateProduct = async (ctx) => {
     const { body } = ctx.request;
     const { id } = ctx.params;
 
-    updateOne(id, body);
+    const product = getOne(id);
+    if (!product) {
+      throw new Error("There's no product with that ID");
+    }
+
+    updateOne(product, body);
     ctx.status = 200;
     return (ctx.body = {
       success: true,

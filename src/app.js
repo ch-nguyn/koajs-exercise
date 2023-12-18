@@ -17,7 +17,7 @@ koaEjs(app, {
   debug: true,
 });
 
-app.use(koaBody());
+app.use(koaBody({ parsedMethods: ["POST", "PUT", "PATCH", "DELETE"] }));
 app.use(routes.routes());
 app.use(routes.allowedMethods());
 

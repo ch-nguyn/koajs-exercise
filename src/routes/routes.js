@@ -10,7 +10,7 @@ import {
   checkCreateInput,
   checkUpdateInput,
 } from "../middleware/checkInputProduct.js";
-import { getAll, getOne } from "../database/productRepository.js";
+import { getData, getOne } from "../database/productRepository.js";
 
 // const router = new Router({
 //   prefix: "/api/products",
@@ -20,7 +20,7 @@ const router = new Router();
 
 router.get("/page/products", async (ctx) => {
   const { limit, orderBy } = ctx.query;
-  const products = getAll({ limit, orderBy });
+  const products = getData({ limit, orderBy });
   await ctx.render("pages/product", {
     products,
   });
@@ -34,9 +34,9 @@ router.get("/page/edit/:id", async (ctx) => {
 });
 
 router.get("/api/products", getAllProducts);
-router.post("/api/products", checkCreateInput, createProduct);
-router.get("/api/products/:id", getSingleProduct);
-router.delete("/api/products/:id", deleteProduct);
-router.put("/api/products/:id", checkUpdateInput, updateProduct);
+router.post("/api/product", checkCreateInput, createProduct);
+router.get("/api/product/:id", getSingleProduct);
+router.delete("/api/product/:id", deleteProduct);
+router.put("/api/product/:id", checkUpdateInput, updateProduct);
 
 export default router;
